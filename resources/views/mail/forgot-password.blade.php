@@ -55,7 +55,7 @@
                             </p>
 
                             <p>
-                                This link may expire for security reasons.
+                                This link would expire in 15 minutes for security reasons.
                             </p>
                         </td>
                     </tr>

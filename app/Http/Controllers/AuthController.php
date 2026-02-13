@@ -128,6 +128,11 @@ class AuthController extends Controller
             return redirect()->route('admin.forgot_password')->with('fail', 'Invalid token. Please request another reset password link');
         }
 
+        $minuteDifference = Carbon::createFromFormat('Y-m-d H:i:s', $token->create_at)->diffInMinutes(Carbon::now());
+        if ($minuteDifference > 15) {
+            return redirect()->route('admin.forgot_password')->with('fail', 'The password reset link has been expired. Please request a new link.');
+        }
+
         $data = [
             'pageTitle' => 'Reset Password Page',
             'token' => $token->token
