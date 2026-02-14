@@ -55,4 +55,29 @@ class User extends Authenticatable
             'type' => UserType::class
         ];
     }
+
+    public function getPictureAttribute($value)
+    {
+        return $value ? asset('/images/users/' . $value) : asset('/images/users/default.svg');
+    }
+
+    public function getBioAttribute($value)
+    {
+        return $value ?? "";
+    }
+
+    public function getNameAttribute($value)
+    {
+        return $value ?? "";
+    }
+
+    public function getUsernameAttribute($value)
+    {
+        return $value ?? "";
+    }
+
+    public function getEmailAttribute($value)
+    {
+        return $value ?? "";
+    }
 }
