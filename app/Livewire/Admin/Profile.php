@@ -14,6 +14,10 @@ class Profile extends Component
 
     public string $name, $email, $username, $bio;
 
+    protected $listeners = [
+        'updateProfile' => '$refresh'
+    ];
+
     // Synchronize the $tab public property with the browser URL query string.
     // keep => true means -> Keep the query parameter in the URL even if it equals the default value.
     protected $queryString = ['tab' => ['keep' => true]]; // Magic line

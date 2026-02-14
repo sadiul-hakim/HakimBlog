@@ -5,6 +5,7 @@
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
     <title>@yield('pageTitle')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/back/vendors/images/apple-touch-icon.png" />
@@ -23,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.css" />
 
     @stack('stylesheets')
+    @kropifyStyles
     @vite('resources/js/app.js')
 </head>
 
@@ -350,6 +352,7 @@
         });
     </script>
 
+    @kropifyScripts
     @stack('scripts')
 </body>
 

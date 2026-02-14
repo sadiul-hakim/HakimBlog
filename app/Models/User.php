@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function getPictureAttribute($value)
     {
-        return $value ? asset('/images/users/' . $value) : asset('/images/users/default.svg');
+        return $value ? asset('storage/images/users/' . $value) : asset('storage/images/users/default.svg');
     }
 
     public function getBioAttribute($value)
