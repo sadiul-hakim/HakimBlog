@@ -13,7 +13,7 @@ Route::get('/', function () {
  */
 
 Route::prefix("admin")->name("admin.")->group(function () {
-    Route::middleware(['guest'])->controller(AuthController::class)->group(function () {
+    Route::middleware(['guest', 'preventBackHistory'])->controller(AuthController::class)->group(function () {
         Route::get('/login', 'loginForm')->name('login');
         Route::post("/login", "loginHandler")->name("login_handler");
         Route::get('/forgot-password', 'forgotPassword')->name('forgot_password');
@@ -22,7 +22,7 @@ Route::prefix("admin")->name("admin.")->group(function () {
         Route::post("/reset-password-handler", "resetPasswordHandler")->name("reset_password_handler");
     });
 
-    Route::middleware(['auth'])->controller(AdminController::class)->group(function () {
+    Route::middleware(['auth', 'preventBackHistory'])->controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'adminDashboard')->name('dashboard');
         Route::get('/profile', 'profileView')->name('profile');
         Route::post('/update-profile-picture', 'updateProfilePicture')->name('update_profile_picture');
