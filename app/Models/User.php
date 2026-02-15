@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $value ?? "";
     }
+
+    public function socialLink()
+    {
+        return $this->hasOne(UserSocialLink::class);
+    }
 }
