@@ -35,6 +35,15 @@ class AdminController extends Controller
         return view('back.pages.profile', $data);
     }
 
+    public function generalSettings()
+    {
+        $data = [
+            'pageTitle' => 'General Settings'
+        ];
+
+        return view('back.pages.settings', $data);
+    }
+
     public function updateProfilePicture(Request $request)
     {
         $user = Auth::user();

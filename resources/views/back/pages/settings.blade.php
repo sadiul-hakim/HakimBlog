@@ -1,0 +1,26 @@
+@extends('back.layout.page-layout')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'General Setting')
+@section('content')
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="title">
+                    <h4>Settings</h4>
+                </div>
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('admin.dashboard') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a href="{{ route('admin.settings') }}">General Setting</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    {{-- Page Header Ends --}}
+    @livewire('admin.settings')
+    {{-- Tabs End Here --}}
+@endsection

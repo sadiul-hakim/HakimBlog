@@ -138,10 +138,10 @@ class Profile extends Component
                 $data
             );
 
-            $this->dispatch('showAlert', ['type' => 'success', 'message' => 'You social links have been updated.']);
+            $this->dispatch('showAlert', ['type' => 'success', 'message' => 'Your social links have been updated.']);
         } catch (Exception $ex) {
             report($ex);
-            $this->dispatch('showAlert', ['type' => 'fail', 'message' => 'Failed to update social links.']);
+            $this->dispatch('showAlert', ['type' => 'error', 'message' => 'Failed to update social links.']);
         }
     }
 }
