@@ -94,7 +94,25 @@
                     <div class="tab-pane fade {{ $tab == 'logo_favicon' ? 'active show' : '' }}" id="logo_favicon"
                         role="tabpanel">
                         <div class="pd-20">
-                            Logo and Favicon
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Site Logo</h6>
+                                    <div class="mb-2 mt-1" style="max-width: 200px">
+                                        <img src="{{ $site_logo ? asset('/storage/images/site/' . $site_logo) : '' }}"
+                                            wire:ignore alt="" class="image-thumbnail" id="preview_site_logo">
+                                    </div>
+                                    <form method="POST" action="{{ route('admin.update_logo') }}"
+                                        enctype="multipart/form-data" id="updateLogoForm">
+                                        @csrf
+                                        <div class="mb-2">
+                                            <input type="file" name="site_logo" id="site_logo" class="form-control"
+                                                accept=".png,.jpg,.jpeg,.svg,.webp" />
+                                            <span class="text-danger ml-1" id="logo_error"></span>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Change Logo</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

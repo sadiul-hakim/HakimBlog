@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GeneralSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use SawaStacks\Utils\Kropify;
 
 class AdminController extends Controller
 {
@@ -73,5 +73,38 @@ class AdminController extends Controller
         }
 
         return response()->json(['status' => 0, 'message' => 'Upload failed.'], 500);
+    }
+
+    public function updateLogo(Request $request)
+    {
+
+        $setting = GeneralSetting::take(1)->first();
+        if (is_null($setting)) {
+            return response()->json(['status' => 0, 'message' => 'Make sure you update general settings first.'], 500);
+        }
+
+        $file = $request->file('site_logo');
+
+        // Define the path relative to the "public" disk
+        $folderPath = 'images/site/';
+        $extension = '.' . $file->extension();
+        $fileName = 'IMG_' . uniqid() . $extension;
+        $fullPath = $folderPath . $fileName;
+        $uploaded = Storage::disk('public')->put($fullPath, File::get($file));
+
+        if ($uploaded) {
+            // Handle Old File Deletion
+            $old_picture = $setting->site_logo ?? null;
+            if ($old_picture && Storage::disk('public')->exists($folderPath . $old_picture)) {
+                Storage::disk('public')->delete($folderPath . $old_picture);
+            }
+
+            // Update Database
+            $setting->update(['site_logo' => $fileName]);
+
+            return response()->json(['status' => 1, 'message' => 'Site Logo has been uploaded.'], 200);
+        }
+
+        return response()->json(['status' => 0, 'message' => 'Failed to upload site logo.'], 500);
     }
 }

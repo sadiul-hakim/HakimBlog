@@ -17,6 +17,7 @@ class Settings extends Component
     public ?string $site_phone = null;
     public ?string $site_meta_keywords = null;
     public ?string $site_meta_description = null;
+    public ?string $site_logo = null;
 
     public function selectTab(string $tab)
     {
@@ -34,6 +35,7 @@ class Settings extends Component
             $this->site_phone = $settings->site_phone;
             $this->site_meta_keywords = $settings->site_meta_keywords;
             $this->site_meta_description = $settings->site_meta_description;
+            $this->site_logo = $settings->site_logo;
         }
     }
 

@@ -204,9 +204,11 @@
 
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="index.html">
-                <img src="/back/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-                <img src="/back/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+            <a href="{{ route('admin.dashboard') }}">
+                <img src="{{ settings()->site_logo ? asset('storage/images/site/' . settings()->site_logo) : '' }}"
+                    alt="" class="dark-logo site_logo" />
+                <img src="{{ settings()->site_logo ? asset('storage/images/site/' . settings()->site_logo) : '' }}"
+                    alt="" class="light-logo site_logo" />
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
