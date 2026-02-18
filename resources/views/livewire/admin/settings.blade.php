@@ -112,6 +112,25 @@
                                         <button type="submit" class="btn btn-primary">Change Logo</button>
                                     </form>
                                 </div>
+                                {{-- Site Logo Ends --}}
+                                <div class="col-md-6">
+                                    <h6>Site Favicon</h6>
+                                    <div class="mb-2 mt-1" style="max-width: 200px">
+                                        <img src="{{ $site_favicon ? asset('/storage/images/site/' . $site_favicon) : '' }}"
+                                            wire:ignore alt="" class="image-thumbnail"
+                                            id="preview_site_favicon">
+                                    </div>
+                                    <form method="POST" action="{{ route('admin.update_favicon') }}"
+                                        enctype="multipart/form-data" id="updateFaviconForm">
+                                        @csrf
+                                        <div class="mb-2">
+                                            <input type="file" name="site_favicon" id="site_favicon"
+                                                class="form-control" accept=".png,.jpg,.jpeg,.svg,.webp" />
+                                            <span class="text-danger ml-1" id="favicon_error"></span>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Change Favicon</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

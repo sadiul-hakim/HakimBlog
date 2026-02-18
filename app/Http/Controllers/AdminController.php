@@ -107,4 +107,37 @@ class AdminController extends Controller
 
         return response()->json(['status' => 0, 'message' => 'Failed to upload site logo.'], 500);
     }
+
+    public function updateFavicon(Request $request)
+    {
+
+        $setting = GeneralSetting::take(1)->first();
+        if (is_null($setting)) {
+            return response()->json(['status' => 0, 'message' => 'Make sure you update general settings first.'], 500);
+        }
+
+        $file = $request->file('site_favicon');
+
+        // Define the path relative to the "public" disk
+        $folderPath = 'images/site/';
+        $extension = '.' . $file->extension();
+        $fileName = 'IMG_' . uniqid() . $extension;
+        $fullPath = $folderPath . $fileName;
+        $uploaded = Storage::disk('public')->put($fullPath, File::get($file));
+
+        if ($uploaded) {
+            // Handle Old File Deletion
+            $old_picture = $setting->site_favicon ?? null;
+            if ($old_picture && Storage::disk('public')->exists($folderPath . $old_picture)) {
+                Storage::disk('public')->delete($folderPath . $old_picture);
+            }
+
+            // Update Database
+            $setting->update(['site_favicon' => $fileName]);
+
+            return response()->json(['status' => 1, 'message' => 'Site Favicon has been uploaded.'], 200);
+        }
+
+        return response()->json(['status' => 0, 'message' => 'Failed to upload site favicon.'], 500);
+    }
 }

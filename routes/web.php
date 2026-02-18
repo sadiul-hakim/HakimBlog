@@ -28,6 +28,7 @@ Route::prefix("admin")->name("admin.")->group(function () {
         Route::get('/settings', 'generalSettings')->name('settings');
         Route::post('/update-profile-picture', 'updateProfilePicture')->name('update_profile_picture');
         Route::post('/update-logo', 'updateLogo')->name('update_logo');
+        Route::post('/update-favicon', 'updateFavicon')->name('update_favicon');
         Route::post("/logout", "logoutHandle")->name("logout");
     });
 });

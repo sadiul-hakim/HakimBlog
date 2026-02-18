@@ -121,5 +121,48 @@
                 errorElement.text('Please select an image file.');
             }
         });
+
+        // Send Request to update favicon
+        $("#updateFaviconForm").submit(function(e) {
+            e.preventDefault();
+            let form = this;
+            let input = $(form).find('input[type="file"]').val();
+            let errorElement = $(form).find('span#favicon_error');
+            errorElement.text('');
+            if (input.length > 0) {
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: $(form).attr('method'),
+                    data: new FormData(form),
+                    processData: false,
+                    dataType: 'json',
+                    contentType: false,
+                    beforeSend: function() {},
+                    success: function(data) {
+                        if (data.status == 1) {
+                            $(form)[0].reset();
+
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success',
+                                timer: 2500,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.message,
+                                icon: 'error',
+                                timer: 2500,
+                                showConfirmButton: false
+                            });
+                        }
+                    }
+                })
+            } else {
+                errorElement.text('Please select an image file.');
+            }
+        });
     </script>
 @endpush
