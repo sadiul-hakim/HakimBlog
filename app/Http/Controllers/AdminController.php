@@ -18,6 +18,14 @@ class AdminController extends Controller
         return view('back.pages.dashboard', compact('data'));
     }
 
+    public function categoriesPage(Request $request)
+    {
+        $data = [
+            'pageTitle' => 'Categories'
+        ];
+        return view('back.pages.categories', compact('data'));
+    }
+
     public function logoutHandle(Request $request)
     {
         Auth::logout();
