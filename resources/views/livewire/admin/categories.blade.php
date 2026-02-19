@@ -34,7 +34,9 @@
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <a href="" class="text-primary mx-2">
+                                        <a href="javascript:;"
+                                            wire:click="editParentCategoryModal({{ $pCategory->id }})"
+                                            class="text-primary mx-2">
                                             <i class="dw dw-edit2"></i>
                                         </a>
                                         <a href="" class="text-danger mx-2">
@@ -114,7 +116,7 @@
                 </div>
                 <div class="modal-body">
                     @if ($isUpdateParentCategoryMood)
-                        <input type="hidden" wire:model="pCategory_id">
+                        <input type="hidden" wire:model="pCategory_id" />
                     @endif
                     <div class="form-group">
                         <label for="pCategory_name"><b>Parent Category Name</b></label>

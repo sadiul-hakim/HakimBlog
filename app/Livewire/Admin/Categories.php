@@ -25,10 +25,11 @@ class Categories extends Component
         $this->showParentCategoryModalForm();
     }
 
-    public function updateParentCategoryModal()
+    public function editParentCategoryModal(int $id)
     {
-        $this->pCategory_id = null;
-        $this->pCategory_name = null;
+        $pCategory = ParentCategory::find($id);
+        $this->pCategory_id = $pCategory->id;
+        $this->pCategory_name = $pCategory->name;
         $this->isUpdateParentCategoryMood = true;
         $this->showParentCategoryModalForm();
     }
@@ -46,8 +47,26 @@ class Categories extends Component
         $this->pCategory_id = $this->pCategory_name = null;
     }
 
+    public function updateParentCategory()
+    {
+        $pCategory = ParentCategory::findOrFail($this->pCategory_id);
+        $this->validate([
+            'pCategory_name' => 'required|unique:parent_categories,name,' . $pCategory->id
+        ], [
+            'pCategory_name.required' => 'Parent Category name field is required',
+            'pCategory_name.unique' => 'This Parent Category name is taken',
+        ]);
 
-    public function updateParentCategory() {}
+        $pCategory->name = $this->pCategory_name;
+        $pCategory->slug = null;
+        $updated = $pCategory->save();
+        if ($updated) {
+            $this->hideParentCategoryModalForm();
+            $this->dispatch('showAlert', ['type' => 'success', 'message' => 'Parent Category has been updated successfully.']);
+        } else {
+            $this->dispatch('showAlert', ['type' => 'error', 'message' => 'Something went wrong!']);
+        }
+    }
     public function createParentCategory()
     {
         $this->validate([
