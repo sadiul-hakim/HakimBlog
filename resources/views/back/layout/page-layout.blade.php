@@ -21,6 +21,8 @@
     <link rel="stylesheet" type="text/css" href="/back/vendors/styles/core.min.css" />
     <link rel="stylesheet" type="text/css" href="/back/vendors/styles/icon-font.min.css" />
     <link rel="stylesheet" type="text/css" href="/back/vendors/styles/style.min.css" />
+    <link rel="stylesheet" href="/extra-assets/jquery-ui-1.14.2/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/extra-assets/jquery-ui-1.14.2/jquery-ui.theme.min.css" />
 
     @stack('stylesheets')
     @kropifyStyles
@@ -287,6 +289,7 @@
     <script src="/back/vendors/scripts/script.min.js"></script>
     <script src="/back/vendors/scripts/process.js"></script>
     <script src="/back/vendors/scripts/layout-settings.js"></script>
+    <script src="/extra-assets/jquery-ui-1.14.2/jquery-ui.min.js"></script>
     <script>
         document.addEventListener('livewire:init', () => {
             Livewire.on('showAlert', (event) => {
