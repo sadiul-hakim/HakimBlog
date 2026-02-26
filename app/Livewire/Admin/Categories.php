@@ -175,7 +175,7 @@ class Categories extends Component
 
         $category = new Category();
         $category->name = $this->category_name;
-        $category->parent = $this->category_parent;
+        $category->parent = $this->category_parent ?? 0;
         $saved = $category->save();
 
         if ($saved) {
