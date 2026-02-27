@@ -13,13 +13,13 @@ class Categories extends Component
     public $pCategory_id, $pCategory_name;
     public $category_id, $category_name, $category_parent;
 
-    protected $listeners = ['updateCategoryOrdering'];
+    protected $listeners = ['updateParentCategoryOrdering', 'updateCategoryOrdering'];
 
     public function render()
     {
         return view('livewire.admin.categories', [
-            'pCategories' => ParentCategory::orderBy('ordering', 'asc')->get(),
-            'categories' => Category::orderBy('ordering', 'asc')->get(),
+            'pCategories' => ParentCategory::with("children")->orderBy('ordering', 'asc')->get(),
+            'categories' => Category::with("parent_category")->orderBy('ordering', 'asc')->get(),
         ]);
     }
 
@@ -83,6 +83,7 @@ class Categories extends Component
         $category = Category::find($id);
         $this->category_id = $category->id;
         $this->category_name = $category->name;
+        $this->category_parent = $category->parent;
         $this->isUpdateCategoryMood = true;
         $this->showCategoryModalForm();
     }
@@ -154,7 +155,7 @@ class Categories extends Component
         }
     }
 
-    public function updateCategoryOrdering($positions)
+    public function updateParentCategoryOrdering($positions)
     {
         foreach ($positions as $position) {
             $id = $position[0];
@@ -162,6 +163,16 @@ class Categories extends Component
             ParentCategory::where('id', $id)->update(['ordering' => $ordering]);
         }
         $this->dispatch('showAlert', ['type' => 'success', 'message' => 'Parent Category order has been updated successfully.']);
+    }
+
+    public function updateCategoryOrdering($positions)
+    {
+        foreach ($positions as $position) {
+            $id = $position[0];
+            $ordering = $position[1];
+            Category::where('id', $id)->update(['ordering' => $ordering]);
+        }
+        $this->dispatch('showAlert', ['type' => 'success', 'message' => 'Category order has been updated successfully.']);
     }
 
     public function createCategory()
@@ -197,6 +208,7 @@ class Categories extends Component
         ]);
 
         $category->name = $this->category_name;
+        $category->parent = $this->category_parent;
         $category->slug = null;
         $updated = $category->save();
         if ($updated) {

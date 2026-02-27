@@ -30,7 +30,7 @@
                                     {{ $pCategory->name }}
                                 </td>
                                 <td>
-                                    -
+                                    {{ $pCategory->children() ? $pCategory->children()->count() : 0 }}
                                 </td>
                                 <td>
                                     <div class="table-actions">
@@ -82,7 +82,7 @@
                         <th>N. of Posts</th>
                         <th>Action</th>
                     </thead>
-                    <tbody id="sortable_parent_categories">
+                    <tbody id="sortable_categories">
                         @forelse ($categories as $category)
                             <tr data-index="{{ $category->id }}" data-ordering="{{ $category->ordering }}">
                                 <td>
@@ -92,7 +92,7 @@
                                     {{ $category->name }}
                                 </td>
                                 <td>
-                                    {{ $category->parent }}
+                                    {{ $category->parent_category ? $category->parent_category->name : 'Any' }}
                                 </td>
                                 <td>
                                     -
