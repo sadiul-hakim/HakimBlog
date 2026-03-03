@@ -224,12 +224,23 @@
                             <span class="micon fa fa-home"></span><span class="mtext">Home</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.categories') }}"
-                            class="dropdown-toggle no-arrow {{ Route::is('admin.categories') ? 'active' : '' }}">
-                            <span class="micon fa fa-th-list"></span><span class="mtext">Categories</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->type == 'superAdmin')
+                        <li>
+                            <a href="{{ route('admin.categories') }}"
+                                class="dropdown-toggle no-arrow {{ Route::is('admin.categories') ? 'active' : '' }}">
+                                <span class="micon fa fa-th-list"></span><span class="mtext">Categories</span>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle">
+                                <span class="micon fa fa-shopping-bag"></span><span class="mtext">Shop</span>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="">New Product</a></li>
+                                <li><a href="">All Products</a></li>
+                            </ul>
+                        </li>
+                    @endif
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon fa fa-newspaper-o"></span><span class="mtext"> Posts </span>
@@ -237,15 +248,6 @@
                         <ul class="submenu">
                             <li><a href="">New</a></li>
                             <li><a href="">Posts</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon fa fa-shopping-bag"></span><span class="mtext">Shop</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="">New Product</a></li>
-                            <li><a href="">All Products</a></li>
                         </ul>
                     </li>
                     <li>
@@ -266,13 +268,15 @@
                             <span class="mtext">Profile</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.settings') }}"
-                            class="dropdown-toggle no-arrow {{ Route::is('admin.settings') ? 'active' : '' }}">
-                            <span class="micon fa fa-cogs"></span>
-                            <span class="mtext">General</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->type == 'superAdmin')
+                        <li>
+                            <a href="{{ route('admin.settings') }}"
+                                class="dropdown-toggle no-arrow {{ Route::is('admin.settings') ? 'active' : '' }}">
+                                <span class="micon fa fa-cogs"></span>
+                                <span class="mtext">General</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
