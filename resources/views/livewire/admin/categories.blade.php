@@ -57,6 +57,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="d-block mt-1 text-center">
+                {{ $pCategories->links('livewire::simple-bootstrap') }}
+            </div>
         </div>
     </div>
     {{-- Parent Category Ends --}}
@@ -120,6 +123,9 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="d-block mt-1 text-center">
+                {{ $categories->links('livewire::simple-bootstrap') }}
             </div>
         </div>
     </div>

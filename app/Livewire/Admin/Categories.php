@@ -4,22 +4,32 @@ namespace App\Livewire\Admin;
 
 use App\Models\Category;
 use App\Models\ParentCategory;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
+use Throwable;
 
 class Categories extends Component
 {
+    use WithPagination;
+
     public bool $isUpdateParentCategoryMood = false;
     public bool $isUpdateCategoryMood = false;
     public $pCategory_id, $pCategory_name;
     public $category_id, $category_name, $category_parent;
+
+    public $pCategoriesPerPage = 5;
+    public $categoriesPerPage = 10;
 
     protected $listeners = ['updateParentCategoryOrdering', 'updateCategoryOrdering'];
 
     public function render()
     {
         return view('livewire.admin.categories', [
-            'pCategories' => ParentCategory::with("children")->orderBy('ordering', 'asc')->get(),
-            'categories' => Category::with("parent_category")->orderBy('ordering', 'asc')->get(),
+            'pCategories' => ParentCategory::with("children")->orderBy('ordering', 'asc')
+                ->paginate($this->pCategoriesPerPage, ["*"], "pCat_page"),
+            'categories' => Category::with("parent_category")->orderBy('ordering', 'asc')
+                ->paginate($this->categoriesPerPage, ["*"], "cat_page"),
         ]);
     }
 
@@ -41,15 +51,28 @@ class Categories extends Component
 
     public function deleteParentCategory(int $id)
     {
-        $pCategory = ParentCategory::findOrFail($id);
+        try {
 
-        // Do some checking
-        $deleted = $pCategory->delete();
+            // In PHP, anonymous functions do NOT automatically inherit variables from the outer scope.
+            // use () says, Import this external variable into the closure.
+            DB::transaction(function () use ($id) {
+                $pCategory = ParentCategory::findOrFail($id);
 
-        if ($deleted) {
+                if ($pCategory->children->count() > 0) {
+                    foreach ($pCategory->children as $category) {
+
+                        // Release the category
+                        Category::where("id", $category->id)->update(['parent' => 0]);
+                    }
+                }
+
+                $pCategory->delete();
+            });
+
             $this->hideParentCategoryModalForm();
             $this->dispatch('showAlert', ['type' => 'success', 'message' => 'Parent Category has been deleted successfully.']);
-        } else {
+        } catch (Throwable $ex) {
+
             $this->dispatch('showAlert', ['type' => 'error', 'message' => 'Something went wrong!']);
         }
     }
