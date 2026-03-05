@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 
 class PostController extends Controller
 {
@@ -38,10 +39,22 @@ class PostController extends Controller
             $folderPath = 'images/posts/';
             $extension = '.' . $file->extension();
             $fileName = 'IMG_' . uniqid() . $extension;
-            $fullPath = $folderPath . $fileName;
-            $uploaded = Storage::disk('public')->put($fullPath, File::get($file));
+            // $fullPath = $folderPath . $fileName;
+            // $uploaded = Storage::disk('public')->put($fullPath, File::get($file));
+            $uploaded = $file->move(public_path($folderPath), $fileName);
 
             if ($uploaded) {
+                $resized_path = $folderPath . 'resized/';
+                if (!File::isDirectory($resized_path)) {
+                    File::makeDirectory($resized_path, 0777, true, true);
+                }
+                // Thumbnail (Aspect Ratio: 1)
+                Image::read($folderPath . $fileName)->cover(300, 300)->save($resized_path . 'thumb_' . $fileName);
+
+                // Resized Image (Aspect Ratio: 1.6)
+                Image::read($folderPath . $fileName)->cover(512, 320)->save($resized_path . 'resized_' . $fileName);
+
+                // Make a new Post and save
                 $post = new Post();
                 $post->author_id = Auth::id();
                 $post->category = $request->category;
