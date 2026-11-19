@@ -23,8 +23,10 @@ BLOG_STATUS_CHOICES = ((0, "Draft"), (1, "Published"))
 class Blog(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="blogs"
+    )
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blogs")
     featured_image = models.ImageField(upload_to="uploads/%Y/%m/%d")
     short_description = models.TextField(max_length=500)
     blog_body = CKEditor5Field("Body", config_name="default")
