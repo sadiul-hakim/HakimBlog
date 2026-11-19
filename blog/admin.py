@@ -12,7 +12,7 @@ admin.site.index_title = "Hakim Blog"
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "status",
+        "enabled",
         "created_at",
         "updated_at",
     )
@@ -22,9 +22,9 @@ class CategoryAdmin(admin.ModelAdmin):
     )
     list_filter = (
         "created_at",
-        "status",
+        "enabled",
     )
-    list_editable = ("status",)
+    list_editable = ("enabled",)
 
 
 @admin.register(Blog)

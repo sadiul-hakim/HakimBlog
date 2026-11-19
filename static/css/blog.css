@@ -1,4 +1,16 @@
 /* stylelint-disable selector-list-comma-newline-after */
+@font-face {
+  font-family: 'Roboto';
+  /* Point to the file using Django's static tag syntax */
+  src: url('../fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900; /* Tells the browser this file has all weights */
+  font-style: normal;
+  font-display: swap; /* Prevents invisible text while loading */
+}
+
+body{
+  font-family: Roboto, 'Arial' !important;
+}
 
 .blog-header {
   border-bottom: 1px solid #e5e5e5;

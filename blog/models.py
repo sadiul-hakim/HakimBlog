@@ -2,13 +2,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 
-STATUS_CHOICES = ((0, "Enabled"), (1, "Disabled"))
-
 
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+    enabled = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
