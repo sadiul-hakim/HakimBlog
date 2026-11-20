@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
+from django.shortcuts import get_object_or_404, render
 
 from .models import Blog, Category
 
@@ -21,14 +21,16 @@ def home(request):
 
 def posts_by_category(request, category_id):
     category = get_object_or_404(Category, pk=category_id)
-    posts = Blog.objects.filter(status=1, category=category_id)
+    posts = Blog.objects.select_related("author", "category").filter(
+        status=1, category=category_id
+    )
     context = {"posts": posts, "category": category}
     return render(request, "posts_by_category.html", context)
 
 
 def posts_by_search(request):
     text = request.GET.get("text")
-    posts = Blog.objects.filter(
+    posts = Blog.objects.select_related("author", "category").filter(
         Q(title__icontains=text)
         | Q(short_description__icontains=text)
         | Q(blog_body__icontains=text),
