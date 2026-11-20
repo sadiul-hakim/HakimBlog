@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "mamood_django_admin_log_viewer",
     "django_select2",
     "blog",
+    "core",
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "blog.context_processors.get_categories",
+                "core.context_processors.get_settings",
+                "core.context_processors.get_links",
             ],
         },
     },

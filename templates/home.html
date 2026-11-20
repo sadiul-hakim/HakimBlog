@@ -9,7 +9,7 @@
 				<div class="col-md-8 px-0">
 					<h1 class="display-4 font-italic">{{post.title}}</h1>
 					<p class="lead my-3">{{post.short_description}}</p>
-					<p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+					<p class="lead mb-0"><a href="{% url 'post' post.slug %}" class="text-white font-weight-bold">Continue reading...</a></p>
 				</div>
 			</div>
 		{% endif %}
@@ -21,7 +21,7 @@
 				<div class="col-md-6">
 					<div class="card border-0" >
 						<div class="card-body">
-							<h3>{{post.title}}</h3>
+							<h3><a class="text-dark text-decoration-none" href="{% url 'post' post.slug %}">{{post.title}}</a></h3>
 							<small class="mb-1 text-muted">{{post.created_at | timesince }} ago | {{post.author}}</small>
 							<p class="card-text">{{post.short_description | truncatewords:70}}</p>
 						</div>
@@ -37,7 +37,7 @@
 				{% for post in posts %}
 					<div class="blog-post">
 						<div class="bg-light p-2">
-							<h2 class="blog-post-title"><a href="#" class="text-dark text-decoration-none">{{post.title}}</a></h2>
+							<h2 class="blog-post-title"><a href="{% url 'post' post.slug %}" class="text-dark text-decoration-none">{{post.title}}</a></h2>
 							<p class="blog-post-meta">{{post.created_at | timesince}} ago by <a href="#">{{post.author}}</a></p>
 						</div>
 						<div class="p-2">

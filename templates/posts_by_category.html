@@ -11,7 +11,7 @@
 					<div class="card border-0" >
 						<div class="card-body">
 							<h3>
-								<a class="text-dark text-decoration-none" href="#">{{post.title}}</a>
+								<a class="text-dark text-decoration-none" href="{% url 'post' post.slug %}">{{post.title}}</a>
 							</h3>
 							<small class="mb-1 text-muted">{{post.created_at | timesince }} ago | {{post.author}}</small>
 							<p class="card-text">{{post.short_description | truncatewords:70}}</p>

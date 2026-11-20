@@ -7,7 +7,7 @@ def home(request):
     posts = (
         Blog.objects.select_related("author")
         .filter(is_featured=False, status=1)
-        .order_by("updated_at")[:15]
+        .order_by("-updated_at")[:15]
     )
     featured_post = (
         Blog.objects.select_related("author")
@@ -23,3 +23,18 @@ def posts_by_category(request, category_id):
     posts = Blog.objects.filter(status=1, category=category_id)
     context = {"posts": posts, "category": category}
     return render(request, "posts_by_category.html", context)
+
+
+def post(request, slug):
+    post = get_object_or_404(
+        Blog.objects.select_related("author", "category"), slug=slug
+    )
+    related_posts = (
+        Blog.objects.select_related("author", "category")
+        .exclude(pk=post.id)
+        .filter(category=post.category, status=1)
+        .order_by("-updated_at")[:5]
+    )
+
+    context = {"post": post, "related_posts": related_posts}
+    return render(render, "post.html", context)
