@@ -7,5 +7,5 @@ def get_settings(request):
 
 
 def get_links(request):
-    links = NavigationLink.objects.all()
+    links = NavigationLink.objects.filter(enabled=True)
     return {"social_links": links}

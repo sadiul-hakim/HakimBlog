@@ -1,17 +1,17 @@
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Setting(models.Model):
     site_name = models.CharField(max_length=150, default="My Blog")
     tagline = models.CharField(max_length=255, blank=True)
-
     logo = models.ImageField(upload_to="site/", blank=True, null=True)
-
     favicon = models.ImageField(upload_to="site/", blank=True, null=True)
     contact_email = models.EmailField(blank=True)
     contact_phone = models.CharField(max_length=30, blank=True)
     footer_text = models.CharField(max_length=255, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
+    about = CKEditor5Field("About", config_name="default")
 
     def __str__(self):
         return self.site_name
