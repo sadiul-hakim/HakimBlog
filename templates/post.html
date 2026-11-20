@@ -62,15 +62,23 @@
 		<div class="mb-4 p-3">
 			<h4 class="font-italic text-warning">Related Post</h4>
 			<div>
-				{% for post in related_posts %}
-					<div class="card border-0" >
+				{% if related_posts %}
+					{% for post in related_posts %}
+						<div class="card border-0" >
+							<div class="card-body">
+								<h3><a class="text-dark text-decoration-none" href="{% url 'post' post.slug %}">{{post.title}}</a></h3>
+								<small class="mb-1 text-muted">{{post.created_at | timesince }} ago | {{post.author}}</small>
+								<p class="card-text">{{post.short_description | truncatewords:30}}</p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="card border-0">
 						<div class="card-body">
-							<h3><a class="text-dark text-decoration-none" href="{% url 'post' post.slug %}">{{post.title}}</a></h3>
-							<small class="mb-1 text-muted">{{post.created_at | timesince }} ago | {{post.author}}</small>
-							<p class="card-text">{{post.short_description | truncatewords:30}}</p>
+							<span class="lead">No related posts found</span>
 						</div>
 					</div>
-				{% endfor %}
+				{% endif %}
 			</div>
 		</div>
 		<!-- Side widget-->
