@@ -2,7 +2,7 @@
 {% block title %}
 	Hakim Blog
 {% endblock %}
-{% block content %}	
+{% block content %}
 	{% for post in featured_post %}
 		{% if forloop.first %}
 			<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image: url({{ post.featured_image.url }});background-blend-mode: overlay;background-size:cover;">
@@ -56,13 +56,18 @@
 					<h4 class="font-italic">About</h4>
 					<p class="mb-0">{{setting.about | safe}}</p>
 				</div>
-				<div class="p-3">
-					<h4 class="font-italic">Follow Us</h4>
-					<ol class="list-unstyled">
-						<li><a href="#">GitHub</a></li>
-						<li><a href="#">LinkedIn</a></li>
-					</ol>
-				</div>
+				{% if social_links %}
+					<div class="card mb-4 p-3 border-0">
+						<h4 class="font-italic text-warning">Follow Us</h4>
+						<div class="card-body">
+							<ol class="list-unstyled">
+								{% for link in social_links %}
+									<li><a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.title }}</a></li>
+								{% endfor %}
+							</ol>
+						</div>
+					</div>
+				{% endif %}
 			</aside>
 		</div>
 	</main>
